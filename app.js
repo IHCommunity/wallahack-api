@@ -8,10 +8,13 @@ const { StatusCodes } = require('http-status-codes');
 
 /* Db config */
 
+require('./config/db.config');
+
 /* Config express middlewares */
 
 const app = express();
 
+app.use(logger('dev'));
 app.use(express.json()); // Para poder tener req.body en peticiones de tipo application/json
 
 /* Routes */
