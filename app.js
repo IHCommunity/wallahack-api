@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const createError = require('http-errors');
 const jwt = require('jsonwebtoken');
 const { StatusCodes } = require('http-status-codes');
+const cors = require('cors');
 
 /* Db config */
 
@@ -14,6 +15,9 @@ require('./config/db.config');
 /* Config express middlewares */
 
 const app = express();
+app.use(cors({
+  origin: 'http://localhost:5173',
+}))
 
 app.use(logger('dev'));
 app.use(express.json()); // Para poder tener req.body en peticiones de tipo application/json
