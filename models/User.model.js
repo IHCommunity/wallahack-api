@@ -45,7 +45,21 @@ const UserSchema = new mongoose.Schema(
   }
 )
 
-UserSchema.pre('save', function(next) {
+UserSchema.virtual('products', {
+  ref: 'Product',
+  foreignField: 'owner',
+  localField: '_id',
+  justOne: false
+})
+
+UserSchema.virtual('productsBought', {
+  ref: 'Product',
+  foreignField: 'boughtBy',
+  localField: '_id',
+  justOne: false
+})
+
+UserSchema.pre('save', function (next) {
   if (this.isModified('password')) {
     bcrypt.hash(this.password, ROUNDS)
       .then(hash => {
@@ -53,13 +67,13 @@ UserSchema.pre('save', function(next) {
         next()
       })
       .catch(next)
-      // .catch(err => next(err))
+    // .catch(err => next(err))
   } else {
     next()
   }
 })
 
-UserSchema.methods.checkPassword = function(passwordToCompare) {
+UserSchema.methods.checkPassword = function (passwordToCompare) {
   return bcrypt.compare(passwordToCompare, this.password);
 }
 
