@@ -72,5 +72,5 @@ app.use((error, req, res, next) => {
 const port = process.env.PORT || 3000
 
 app.listen(port, () => {
-  console.log(`App initialized at port ${port}`)
+  console.log(`App started at port ${port}`)
 })
